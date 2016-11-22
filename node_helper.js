@@ -15,7 +15,7 @@ module.exports = NodeHelper.create({
 			images.photo = new Array();
 			
 			recursive('modules/MMM-RandomBackground/photos/', function (err, data) {
-				if (data.length > 0) {
+				if (data !== undefined && data.length > 0) {
 					for (i = 0; i < data.length; i++) {						
 						images.photo.push({
 							'photolink': data[i]
