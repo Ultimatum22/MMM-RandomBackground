@@ -55,7 +55,6 @@ Module.register('MMM-RandomBackground', {
 		
 		setInterval(function() {
 			self.imageIndex = Math.round(Math.random() * (self.images.photo.length - 1));
-			Log.info('self.imageIndex: ' + self.imageIndex);
 			self.updateDom(self.config.animationSpeed);
 		}, this.config.updateInterval);
 	},
