@@ -18,7 +18,7 @@ module.exports = NodeHelper.create({
 			var images = {}
 			images.photo = new Array();
 			
-			recursive('modules/mmm-background/photos/', function (err, data) {
+			recursive('modules/MMM-RandomBackground/photos/', function (err, data) {
 				console.log('Loaded1 ' + data.length + ' images.');
 				for (i = 0; i < data.length; i++) {
 					console.log('Data: ' + data[i]);
