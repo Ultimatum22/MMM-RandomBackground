@@ -7,45 +7,27 @@ module.exports = NodeHelper.create({
 	},
 	
 	socketNotificationReceived: function(notification, payload) {
-		console.log('getImagesFromDirectory');
-		
 		if (notification === 'IMAGES_GET') {
 			var self = this;
 			
-			console.log('getImagesFromDirectory');
-			//var fs = require('fs');
 			var recursive = require('recursive-readdir');
 			var images = {}
 			images.photo = new Array();
 			
 			recursive('modules/MMM-RandomBackground/photos/', function (err, data) {
-				console.log('Loaded1 ' + data.length + ' images.');
-				for (i = 0; i < data.length; i++) {
-					console.log('Data: ' + data[i]);
-					
-					images.photo.push({
-						'photolink': data[i]
-					});
+				if (data.length > 0) {
+					for (i = 0; i < data.length; i++) {						
+						images.photo.push({
+							'photolink': data[i]
+						});
+					}
+				} else {
+					console.log('No photo\'s found, make sure there is a folder called \'photos\' in this directory');
 				}
 				
-				console.log('Loaded2 ' + images.photo.length + ' images.');
+				console.log('Loaded ' + images.photo.length + ' images.');
 				self.sendSocketNotification('IMAGE_LIST', images);
-			});
-			
-			/*fs.readdir('modules/mmm-background/photos/Roadtrip-2014/Dave', (err, data) => {
-				
-				console.log('Loaded1 ' + data.length + ' images.');
-				for (i = 0; i < data.length; i++) {
-					//console.log('Data: ' + data[i]);
-					
-					images.photo.push({
-						'photolink': 'modules/mmm-background/photos/Roadtrip-2014/Dave/' + data[i]
-					});
-				}
-				
-				console.log('Loaded2 ' + images.photo.length + ' images.');
-				self.sendSocketNotification('IMAGE_LIST', images);
-			});*/		
+			});		
 		}
 	}
 });
