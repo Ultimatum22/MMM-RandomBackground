@@ -54,7 +54,8 @@ Module.register('MMM-RandomBackground', {
 		self.updateDom(self.config.animationSpeed);
 		
 		setInterval(function() {
-			self.imageIndex = Math.round(Math.random() * (this.images.photo.length - 1))
+			self.imageIndex = Math.round(Math.random() * (this.images.photo.length - 1));
+			Log.info('self.imageIndex: ' + self.imageIndex);
 			self.updateDom(self.config.animationSpeed);
 		}, this.config.updateInterval);
 	},
@@ -63,7 +64,7 @@ Module.register('MMM-RandomBackground', {
 		if (notification === 'IMAGE_LIST') {
 			this.images = payload;
 			
-			if (!this.loaded && this.images.photos.length > 0) {
+			if (!this.loaded) {
 				this.updateDom(1000);
 				this.scheduleUpdateInterval();
 			}
