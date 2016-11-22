@@ -63,7 +63,7 @@ Module.register('MMM-RandomBackground', {
 		if (notification === 'IMAGE_LIST') {
 			this.images = payload;
 			
-			if (!this.loaded && this.images.length > 0) {
+			if (!this.loaded && this.images.photos.length > 0) {
 				this.updateDom(1000);
 				this.scheduleUpdateInterval();
 			}
