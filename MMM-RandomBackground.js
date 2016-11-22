@@ -7,7 +7,7 @@
  * MIT Licensed.
  */
 
-Module.register('mmm-background', {
+Module.register('MMM-RandomBackground', {
 	defaults: {
 		position: 'fullscreen_below',
 		animationSpeed: 1000,
