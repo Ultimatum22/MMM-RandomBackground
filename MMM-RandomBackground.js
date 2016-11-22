@@ -31,8 +31,6 @@ Module.register('MMM-RandomBackground', {
 		var wrapper = document.createElement('div');
 		var imageDisplay = document.createElement('div');
 		
-		console.log("Loaded? " + this.loaded);
-		
 		if (!this.loaded) {
 			wrapper.innerHTML = this.config.loadingText;
 			return wrapper;
@@ -56,25 +54,20 @@ Module.register('MMM-RandomBackground', {
 		self.updateDom(self.config.animationSpeed);
 		
 		setInterval(function() {
-			console.log('Refreshing');
-			self.imageIndex++;
+			self.imageIndex = Math.round(Math.random() * (this.images.photo.length - 1))
 			self.updateDom(self.config.animationSpeed);
 		}, this.config.updateInterval);
 	},
 	
 	socketNotificationReceived: function(notification, payload) {
 		if (notification === 'IMAGE_LIST') {
-			console.log('socketNotificationReceived: ' + notification);
-			console.log(payload);
 			this.images = payload;
 			
-			if (!this.loaded) {
+			if (!this.loaded && this.images.length > 0) {
 				this.updateDom(1000);
 				this.scheduleUpdateInterval();
 			}
 			this.loaded = true;
-			
-			console.log("Loaded2? " + this.loaded);
 		}
 	}
 });
