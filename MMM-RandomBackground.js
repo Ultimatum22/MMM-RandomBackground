@@ -43,14 +43,7 @@ Module.register('MMM-RandomBackground', {
 		
 		imageDisplay.appendChild(imageLink);
 		
-		var progressBar = document.createElement('div');
-		
-		var ProgressBar = require('progressbar.js');
-		var line = new ProgressBar.Line(wrapper);
-		
-		wrapper.appendChild(line);
 		wrapper.appendChild(imageDisplay);
-		
 		
 		return wrapper;
 	},
