@@ -42,7 +42,15 @@ Module.register('MMM-RandomBackground', {
 		imageLink.innerHTML = '<img src="' + image.photolink + '" style="width: 100%; height: 100%">';
 		
 		imageDisplay.appendChild(imageLink);
+		
+		var progressBar = document.createElement('div');
+		
+		var ProgressBar = require('progressbar.js');
+		var line = new ProgressBar.Line(wrapper);
+		
+		wrapper.appendChild(line);
 		wrapper.appendChild(imageDisplay);
+		
 		
 		return wrapper;
 	},
