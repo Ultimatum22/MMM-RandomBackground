@@ -1,0 +1,15 @@
+{
+  "name": "magic-mirror-module-random-background",
+  "version": "1.0.0",
+  "description": "Show a random background from local folder",
+  "main": "MMM-RandomBackground.js",
+  "author": "Dave Nieuwenhuijzen",
+  "license": "ISC",
+  "dependencies": {
+    "recursive-readdir": "^2.1.0",
+	"jquery": "^2.1.1"
+  },
+  "scripts": {
+    "postinstall": "./scripts/post-install.sh"
+  }
+}
