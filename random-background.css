@@ -1,0 +1,32 @@
+.MMM-RandomBackground {
+	
+}
+
+.MMM-RandomBackground .image-info {
+	bottom: 0;
+	width: 100%;
+	z-index: 200;
+	position: fixed;
+	line-height: .8em;
+	padding: 5px 20px 10px 20px;
+	background: rgba(0,0,0,.2);
+	font-size: .62em;
+    letter-spacing: 0px;
+}
+
+.MMM-RandomBackground .image-info .image-title {
+	float: left;
+}
+
+.MMM-RandomBackground .image-info .image-owner {
+	float: right;
+	padding-right: 40px;
+}
+
+.fullscreen {
+	position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}

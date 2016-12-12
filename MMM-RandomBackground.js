@@ -1,51 +1,105 @@
 /* global Module */
 
 /* Magic Mirror
- * Module: MMM-Flickr
- *
- * By Jim Kapsalis https://github.com/kapsolas
- * MIT Licensed.
+ * Module: MMM-RandomBackground
  */
 
 Module.register('MMM-RandomBackground', {
+	
 	defaults: {
-		position: 'fullscreen_below',
 		animationSpeed: 1000,
-		updateInterval: 6000,
-		loadingText: 'Loading images...'
+		updateInterval: 10 * 60 * 1000, // Update every 10 minutes.
+		photoDirectories: [] // Additional folders to find photos in
 	},
+	
+	loaded: false,
 	
 	start: function() {
 		console.log("Background module started!");
 		this.imageIndex = 0;
-		this.loaded = false;
 		this.images = {}
-		this.getImages();
-	},
-	
-	getImages: function() {
-		this.sendSocketNotification('IMAGES_GET');
+		this.sendSocketNotification('RANDOM_IMAGES_GET');
 	},
 	
 	getDom: function() {
 		var wrapper = document.createElement('div');
-		var imageDisplay = document.createElement('div');
 		
 		if (!this.loaded) {
-			wrapper.innerHTML = this.config.loadingText;
+			wrapper.innerHTML = this.translate("LOADING");
 			return wrapper;
 		}
 		
 		var image = this.images.photo[this.imageIndex];
-		var imageLink = document.createElement('div');
-		imageLink.id = 'mmm-background-image';
-		imageLink.innerHTML = '<img src="' + image.photolink + '" style="width: 100%; height: 100%">';
+		var backgroundImage = document.createElement('div');
+		backgroundImage.className = 'background-image fullscreen';
 		
-		imageDisplay.appendChild(imageLink);
+		var backgroundPlaceholder1 = document.createElement('div');
+		backgroundPlaceholder1.id = 'background-placeholder-1';
+		backgroundPlaceholder1.className = 'fullscreen';
 		
-		wrapper.appendChild(imageDisplay);
+		var backgroundPlaceholder2 = document.createElement('div');
+		backgroundPlaceholder2.id = 'background-placeholder-2';
+		backgroundPlaceholder2.className = 'fullscreen';
+		
+		backgroundImage.appendChild(backgroundPlaceholder1);
+		backgroundImage.appendChild(backgroundPlaceholder2);
+		wrapper.appendChild(backgroundImage);
+		
+		// In the future this shows additional info, yet to implement
+		/*var imageInfo = document.createElement('div');
+		imageInfo.className = 'image-info';
+		
+		var imageTitle = document.createElement('div');
+		imageTitle.className = 'image-title';
+		imageTitle.innerHTML = 'Title!';
+		
+		var imageOwner = document.createElement('div');
+		imageOwner.className = 'image-owner';
+		imageOwner.innerHTML = 'Owner!';
+		
+		imageInfo.appendChild(imageTitle);
+		imageInfo.appendChild(imageOwner);
+		
+		wrapper.appendChild(imageInfo);*/
 		
 		return wrapper;
+	},
+	
+	loadImage: function() {
+		var self = this;
+		
+		// Refactor this code
+		var backgroundPlaceholder1 = $('#background-placeholder-1');
+		var backgroundPlaceholder2 = $('#background-placeholder-2');
+		
+		if (backgroundPlaceholder1.is(':visible')) {
+			var top = backgroundPlaceholder1;
+			var bottom = backgroundPlaceholder2;
+		} else {
+			var top = backgroundPlaceholder2;
+			var bottom = backgroundPlaceholder1;
+		}
+		
+		var image = self.images.photo[self.imageIndex];
+		$('<img/>').attr('src', image.photolink).load(function() {
+			
+			$('#background-placeholder-1').css({
+					background: '#000 url("' + image.photolink + '") center center',
+					backgroundSize: 'cover',
+					backgroundRepeat: 'no-repeat'
+				}).animate({
+				opacity: 1.0
+			}, self.config.animationSpeed, function() {
+				
+				$(this).attr('id', 'background-placeholder-2');
+			});
+
+			$('#background-placeholder-2').animate({
+				opacity: 0
+			}, self.config.animationSpeed, function() {
+				$(this).attr('id', 'background-placeholder-1');
+			});
+		});
 	},
 	
 	scheduleUpdateInterval: function() {
@@ -55,20 +109,33 @@ Module.register('MMM-RandomBackground', {
 		self.updateDom(self.config.animationSpeed);
 		
 		setInterval(function() {
+			// Get random photo from array
 			self.imageIndex = Math.round(Math.random() * (self.images.photo.length - 1));
-			self.updateDom(self.config.animationSpeed);
+
+			self.loadImage();
+			
 		}, this.config.updateInterval);
 	},
 	
 	socketNotificationReceived: function(notification, payload) {
-		if (notification === 'IMAGE_LIST') {
+		if (notification === 'RANDOM_IMAGE_LIST') {
 			this.images = payload;
 			
 			if (!this.loaded) {
-				this.updateDom(1000);
 				this.scheduleUpdateInterval();
 			}
+			
 			this.loaded = true;
+			this.updateDom();
+			this.loadImage();
 		}
+	},
+
+    getStyles: function(){
+        return [ 'random-background.css' ]
+    },
+	
+	getScripts: function() {
+		return [ this.file('node_modules/jquery/dist/jquery.min.js') ];
 	}
 });
