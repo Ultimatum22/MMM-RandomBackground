@@ -93,7 +93,6 @@ Module.register('MMM-RandomBackground', {
 				}).animate({
 				opacity: 1.0
 			}, self.config.animationSpeed, function() {
-				
 				$(this).attr('id', 'background-placeholder-2');
 			});
 
