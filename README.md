@@ -43,17 +43,13 @@ The following properties can be configured:
 			<td><code>animationSpeed</code></td>
 			<td>How fast the new image fades into the old one (in milliseconds). A higher value means a slower animation. Default is 1000 ms.</td>
 		</tr>
-        	<tr>
+		<tr>
 			<td><code>updateInterval</code></td>
 			<td>How often a new photo is displayed, default is 10 minutes.</td>
 		</tr>
-        	<tr>
+		<tr>
 			<td><code>photoDirectories</code></td>
 			<td>[Functionality not yet implemented]</td>
-		</tr>
-        	<tr>
-			<td><code>password</code></td>
-			<td><b>Required</b></code> - Your Toon password.</td>
 		</tr>
 	</tbody>
 </table>
