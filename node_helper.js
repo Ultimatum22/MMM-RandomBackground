@@ -22,8 +22,7 @@ module.exports = NodeHelper.create({
 				
 					for (i = 0; i < data.length; i++) {
 						
-						var photoLocation = data[i].substr(photoDir.length - 2); // Account for ./ at the start
-						console.log('> ' + photoLocation);
+						var photoLocation = data[i].substr(photoDir.length - 2); // Remove ./ at the start
 						
 						images.photo.push({
 							'photolink' : data[i]

@@ -5,7 +5,7 @@
  */
 
 Module.register('MMM-RandomBackground', {
-	
+
 	defaults: {
 		animationSpeed: 1000,
 		updateInterval: 10 * 60 * 1000, // Update every 10 minutes.
@@ -18,6 +18,7 @@ Module.register('MMM-RandomBackground', {
 		console.log("Background module started!");
 		this.imageIndex = 0;
 		this.images = {}
+
 		this.sendSocketNotification('RANDOM_IMAGES_GET');
 	},
 	
@@ -26,6 +27,7 @@ Module.register('MMM-RandomBackground', {
 		
 		if (!this.loaded) {
 			wrapper.innerHTML = this.translate("LOADING");
+
 			return wrapper;
 		}
 		
@@ -43,6 +45,7 @@ Module.register('MMM-RandomBackground', {
 		
 		backgroundImage.appendChild(backgroundPlaceholder1);
 		backgroundImage.appendChild(backgroundPlaceholder2);
+
 		wrapper.appendChild(backgroundImage);
 		
 		// In the future this shows additional info, yet to implement
@@ -134,7 +137,7 @@ Module.register('MMM-RandomBackground', {
     getStyles: function(){
         return [ 'random-background.css' ]
     },
-	
+
 	getScripts: function() {
 		return [ this.file('node_modules/jquery/dist/jquery.min.js') ];
 	}

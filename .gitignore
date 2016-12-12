@@ -35,5 +35,8 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+<<<<<<< HEAD
 
 photos
+=======
+>>>>>>> 2791c69c0953d2fd51504fed712586606354b313
