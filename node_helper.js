@@ -1,5 +1,6 @@
-var NodeHelper = require("node_helper");
+var NodeHelper = require('node_helper');
 var request = require('request');
+var ExifImage = require('exif').ExifImage;
 
 module.exports = NodeHelper.create({
 	
@@ -23,9 +24,25 @@ module.exports = NodeHelper.create({
 					for (i = 0; i < data.length; i++) {
 						
 						var photoLocation = data[i].substr(photoDir.length - 2); // Remove ./ at the start
+						var photoData = photoLocation.split('/');
+						var dateTaken = "00:00:00 00:00:00";
 						
+						try {
+							new ExifImage({ image : data[i] }, function (error, exifData) {
+								if (error) {
+									console.log('Error: ' + error.message);
+								} else {
+									dateTaken = exifData.exif.DateTimeOriginal;
+								}
+							});
+						} catch (error) {
+							console.log('Error: ' + error.message);
+						}
+
 						images.photo.push({
-							'photolink' : data[i]
+							'photolink': data[i],
+							'takenBy': photoData[photoData.length - 2],
+							'dateTaken': dateTaken
 						});
 					}
 				} else {

@@ -9,13 +9,16 @@ Module.register('MMM-RandomBackground', {
 	defaults: {
 		animationSpeed: 1000,
 		updateInterval: 10 * 60 * 1000, // Update every 10 minutes.
+		showAdditionalInfo: false,
+		randomOrder: true,
 		photoDirectories: [] // Additional folders to find photos in
 	},
 	
 	loaded: false,
 	
 	start: function() {
-		console.log("Background module started!");
+		console.log('Background module started!');
+		console.log('Display in order: ' + (this.config.randomOrder ? 'Yes' : 'No'));
 		this.imageIndex = 0;
 		this.images = {}
 
@@ -48,22 +51,22 @@ Module.register('MMM-RandomBackground', {
 
 		wrapper.appendChild(backgroundImage);
 		
-		// In the future this shows additional info, yet to implement
-		/*var imageInfo = document.createElement('div');
+		var imageInfo = document.createElement('div');
 		imageInfo.className = 'image-info';
 		
 		var imageTitle = document.createElement('div');
 		imageTitle.className = 'image-title';
-		imageTitle.innerHTML = 'Title!';
 		
 		var imageOwner = document.createElement('div');
 		imageOwner.className = 'image-owner';
-		imageOwner.innerHTML = 'Owner!';
+		imageOwner.id = 'image-owner';
 		
 		imageInfo.appendChild(imageTitle);
 		imageInfo.appendChild(imageOwner);
 		
-		wrapper.appendChild(imageInfo);*/
+		if (this.config.showAdditionalInfo) {
+			wrapper.appendChild(imageInfo);
+		}
 		
 		return wrapper;
 	},
@@ -85,7 +88,6 @@ Module.register('MMM-RandomBackground', {
 		
 		var image = self.images.photo[self.imageIndex];
 		$('<img/>').attr('src', image.photolink).load(function() {
-			
 			$('#background-placeholder-1').css({
 					background: '#000 url("' + image.photolink + '") center center',
 					backgroundSize: 'cover',
@@ -94,6 +96,7 @@ Module.register('MMM-RandomBackground', {
 				opacity: 1.0
 			}, self.config.animationSpeed, function() {
 				$(this).attr('id', 'background-placeholder-2');
+				$('#image-owner').html('Taken by ' + image.takenBy + ' on ' + image.dateTaken);
 			});
 
 			$('#background-placeholder-2').animate({
@@ -112,7 +115,7 @@ Module.register('MMM-RandomBackground', {
 		
 		setInterval(function() {
 			// Get random photo from array
-			self.imageIndex = Math.round(Math.random() * (self.images.photo.length - 1));
+			self.nextImageIndex();
 
 			self.loadImage();
 			
@@ -130,6 +133,20 @@ Module.register('MMM-RandomBackground', {
 			this.loaded = true;
 			this.updateDom();
 			this.loadImage();
+		}
+	},
+	
+	nextImageIndex: function() {
+		var self = this;
+		var imageCount = self.images.photo.length;
+		
+		if (this.config.randomOrder) {
+			this.imageIndex = Math.round(Math.random() * (imageCount - 1));
+		} else {
+			this.imageIndex++;
+			if (this.imageIndex == imageCount) { // last image, reset counter
+				this.imageIndex = 0;
+			}
 		}
 	},
 
