@@ -11,6 +11,7 @@ Module.register('MMM-RandomBackground', {
 		updateInterval: 10 * 60 * 1000, // Update every 10 minutes.
 		showAdditionalInfo: false,
 		randomOrder: true,
+		opacity: 1.0,
 		photoDirectories: [] // Additional folders to find photos in
 	},
 	
@@ -93,7 +94,7 @@ Module.register('MMM-RandomBackground', {
 					backgroundSize: 'cover',
 					backgroundRepeat: 'no-repeat'
 				}).animate({
-				opacity: 1.0
+				opacity: self.config.opacity
 			}, self.config.animationSpeed, function() {
 				$(this).attr('id', 'background-placeholder-2');
 				$('#image-owner').html('Taken by ' + image.takenBy + ' on ' + image.dateTaken);

@@ -45,7 +45,19 @@ The following properties can be configured:
 		</tr>
 		<tr>
 			<td><code>updateInterval</code></td>
-			<td>How often a new photo is displayed, default is 10 minutes.</td>
+			<td>How often a new photo is displayed. Default is 10 minutes.</td>
+		</tr>
+		<tr>
+			<td><code>showAdditionalInfo</code></td>
+			<td>Show image meta info. Default is false.</td>
+		</tr>
+		<tr>
+			<td><code>randomOrder</code></td>
+			<td>Display images in random order. Default is true.</td>
+		</tr>
+		<tr>
+			<td><code>opacity</code></td>
+			<td>Opacity of the background. Ranged 0.0 to 1.0. Default is 1.0.</td>
 		</tr>
 		<tr>
 			<td><code>photoDirectories</code></td>
