@@ -7,8 +7,8 @@
   "license": "ISC",
   "dependencies": {
     "recursive-readdir": "^2.1.0",
-	"jquery": "^2.1.1",
-	"exif": "0.6.0"
+    "jquery": "^2.1.1",
+    "exif": "0.6.0"
   },
   "scripts": {
     "postinstall": "./scripts/post-install.sh"

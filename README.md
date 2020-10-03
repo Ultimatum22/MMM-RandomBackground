@@ -28,6 +28,8 @@ modules: [
 ]
 ````
 
+Create a folder named `photos` in the module directory and place the images to be displayed in this folder. Make sure that the file permissions are set correctly so that the MagicMirror process is able to read the files.
+
 ## Configuration options
 The following properties can be configured:
 
