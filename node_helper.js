@@ -1,5 +1,4 @@
 var NodeHelper = require('node_helper');
-var request = require('request');
 var ExifImage = require('exif').ExifImage;
 const {resolve} = require("path");
 
